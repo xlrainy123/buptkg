@@ -105,14 +105,14 @@ text {
                         <div class="vivio-container clearfix">
                             <dl>
                                 <dt><a href="/search">实体属性查询</a></dt>
-                                <dt><a href="/mention">歧义关系查询</a></dt>
+                                <dt><a >歧义关系查询</a></dt>
                                 <dt><a href="/answer">智能问答系统</a></dt>
                             </dl>
 
                             <dl>
                                 <dt><a href="/path">路径搜索模型</a></dt>
-                                 <dt><a href="/path">关系纠错与补全模型</a></dt>
-                                 <dt><a href="/evaluation">信任评估模型</a></dt>
+                                <dt><a >关系纠错与补全模型</a></dt>
+                                <dt><a >信任评估模型</a></dt>
                             </dl>
                             <dl>
                                 <dt><a href="/demo">DEMO3</a></dt>
@@ -136,13 +136,23 @@ text {
 <script>
     var links =
         [
-            {source: '习近平', target: '中华人民共和国', type: 'resolved', rela: '国籍'},
-            {source: '习近平', target: '汉族', type: 'resolved', rela: '民族'},
-            {source: '习近平', target: '1953年6月', type: 'resolved', rela: '出生日期'},
-            {source: '习近平', target: '清华大学', type: 'resolved', rela: '毕业院校'},
-            {source: '习近平', target: '1969年01月', type: 'resolved', rela: '参加工作时间'},
-            {source: '习近平', target: '陕西富平', type: 'resolved', rela: '籍贯'},
-            {source: '习近平', target: '在职研究生/法学博士', type: 'resolved', rela: '学历/学位'},
+            {source: 'Penix', target: 'luciarik', type: 'resolved', rela: 'Master'},
+            {source: 'luciarik', target: 'duncan', type: 'resolved', rela: 'Journeyer'},
+            {source: 'duncan', target: 'deft', type: 'resolved', rela: 'Master'},
+            {source: 'deft', target: 'jfleck', type: 'resolved', rela: 'Journeyer'},
+            {source: 'jfleck', target: 'gicmo', type: 'resolved', rela: 'Journeyer'},
+            {source: 'gicmo', target: 'Gecko', type: 'resolved', rela: 'Observer'},
+
+            {source: 'Penix', target: 'mdanish', type: 'resolved', rela: 'Apprentice'},
+            {source: 'mdanish', target: 'LoRez', type: 'resolved', rela: 'Journeyer'},
+            {source: 'LoRez', target: 'BlckKnght', type: 'resolved', rela: 'Master'},
+            {source: 'BlckKnght', target: 'Gecko', type: 'resolved', rela: 'Apprentice'},
+
+            {source: 'duncan', target: 'Gecko', type: 'resolved', rela: 'Observer'},
+            {source: 'Penix', target: 'LenZ', type: 'resolved', rela: 'Master'},
+            {source: 'LenZ', target: 'Intersect', type: 'resolved', rela: 'Apprentice'},
+            {source: 'Intersect', target: 'ikt0me', type: 'resolved', rela: 'Apprentice'},
+            {source: 'ikt0me', target: 'Gecko', type: 'resolved', rela: 'Observer'},
         ];
 
     var nodes = {};
@@ -158,7 +168,7 @@ text {
         .nodes(d3.values(nodes))
         .links(links)
         .size([width, height])
-        .linkDistance(180)
+        .linkDistance(80)
         .charge(-1500)
         .on("tick", tick)
         .start();
@@ -216,7 +226,7 @@ text {
             'id': function (d, i) {
                 return 'edgepath' + i;
             },
-            'dx': 80,
+            'dx': 40,
             'dy': 0
         });
 

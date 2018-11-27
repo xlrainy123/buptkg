@@ -7642,7 +7642,7 @@
             login: "登录",
             Language: "English",
             welcome: "欢迎",
-            placeholder: "请输入人名，地名或者其他实物的名称,例如：北邮",
+            placeholder: "source:miguel,3 | 马云 | mention: 马云 | path:raph,stric,3",
             Search: "搜索",
             DataSearch: "数据搜索",
             Picture_search: "图谱搜索",

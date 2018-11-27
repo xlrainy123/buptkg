@@ -2,8 +2,10 @@
 from flask import Flask
 from flask import render_template, request
 from datetime import timedelta
-from utils import KG_View, question2info, mention2entity
+from utils import KG_View, question2info, mention2entity, advogato_data_KG_target, source_template, target_template, get_paths, advogato_data_KG_source
 import json
+from baidu import get_baidu_url
+
 app = Flask(__name__)
 app.config['debug'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
@@ -19,11 +21,43 @@ def hello_world():
 def show_demo():
     print("请求方式为:", request.method)
     entity = request.args.to_dict().get('entity', '')
+    # mention = request.args.to_dict().get('mention','')
     if entity == '':
         return render_template('demo.html')
-    contents = KG_View(entity)
-    print(contents)
-    return render_template('index.html', contents=contents)
+    elif "source:" in entity:
+        print(entity)
+        line = entity.split(':')
+        params = line[1].split(",")
+        contents = advogato_data_KG_source('source', params[0], int(params[1]))
+        print(contents)
+        return render_template('index.html', contents=contents)
+    elif "target:" in entity:
+        print(entity)
+        line = entity.split(':')
+        contents = advogato_data_KG_target('target', line[1])
+        print(contents)
+        return render_template('index.html', contents=contents)
+    elif "mention:" in entity:
+        print(entity)
+        line = entity.strip().split(":")
+        mention = line[1]
+        contents = mention2entity(mention)
+        print(contents)
+        return render_template('index.html', contents=contents)
+    elif "path:" in entity:
+        print(entity)
+        line = entity.strip().split(":")
+        entities = line[1].split(",")
+        source = entities[0]
+        target = entities[1]
+        cutoff = entities[2]
+        print(source, target, cutoff)
+        contents = get_paths(source, target, cutoff)
+        return render_template('index.html', contents=contents)
+    else:
+        contents = KG_View(entity)
+        print(contents)
+        return render_template('index.html', contents=contents)
 
 @app.route('/search')
 def show_search():
@@ -31,14 +65,15 @@ def show_search():
 
 @app.route('/answer')
 def question():
-    print("请求方式为:", request.method)
-    question = request.args.to_dict().get('question', '')
-    if question == '':
-        return "你可能忘记提问了, 试试/answer?question=刘德华的妻子是谁"
-    print(question)
-    answer = question2info(question)
-    print(answer)
-    return json.dumps(answer, ensure_ascii=False)
+    # print("请求方式为:", request.method)
+    # question = request.args.to_dict().get('question', '')
+    # if question == '':
+    #     return "你可能忘记提问了, 试试/answer?question=刘德华的妻子是谁"
+    # print(question)
+    # answer = question2info(question)
+    # print(answer)
+    # return json.dumps(answer, ensure_ascii=False)
+    return render_template("robot.html")
 
 @app.route('/mention')
 def mention():
